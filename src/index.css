@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors duration-200;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+  .formula-preview {
+    @apply bg-[#E8F3FF] dark:bg-[#0d1f3c] rounded-xl p-4 font-mono text-sm sm:text-base text-gray-800 dark:text-blue-100 break-all leading-relaxed;
+  }
+
+  .param-input {
+    @apply w-full border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 text-[110%]
+           bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100
+           focus:outline-none focus:ring-2 focus:ring-[#165DFF] dark:focus:ring-[#4080FF]
+           placeholder:text-gray-400 dark:placeholder:text-gray-500
+           transition-colors duration-150;
+  }
+
+  .btn-primary {
+    @apply bg-[#165DFF] dark:bg-[#4080FF] hover:bg-blue-700 dark:hover:bg-blue-500
+           text-white font-medium px-4 py-2 rounded-lg transition-colors duration-150
+           active:scale-95;
+  }
+
+  .btn-copy {
+    @apply btn-primary flex items-center gap-2 justify-center w-full py-3 text-base font-semibold rounded-xl shadow-sm;
+  }
+
+  .card {
+    @apply bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800
+           hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer;
+  }
+
+  .condition-row {
+    @apply bg-[#F5F7FA] dark:bg-gray-800 rounded-xl p-3;
+  }
+
+  .default-row {
+    @apply bg-[#E5E6EB] dark:bg-gray-700 rounded-xl p-3 flex flex-wrap items-center gap-2;
+  }
+
+  .page-container {
+    @apply max-w-2xl mx-auto px-4 pb-12;
+  }
+}
+
+/* 搜索下拉框阴影 */
+.search-dropdown {
+  box-shadow: 0 8px 32px rgba(22, 93, 255, 0.1);
+}
+
+/* 复制成功 Toast 动画 */
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+.toast-enter {
+  animation: toast-in 0.2s ease-out;
+}
+
+/* 气泡弹出动画 */
+@keyframes bubble-in {
+  from { opacity: 0; transform: translateY(4px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.bubble-enter {
+  animation: bubble-in 0.15s ease-out;
+}
