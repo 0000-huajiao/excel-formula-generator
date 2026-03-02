@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useEffect } from 'react'
+import { useState, useMemo, useRef, useEffect, useCallback } from 'react'
 import Fuse from 'fuse.js'
 import { formulas, FORMULA_CATEGORIES } from '../data/formulas'
 import { scenarios } from '../data/scenarios'
@@ -121,6 +121,14 @@ export default function HomePage({ onSelectFormula, onGoComposite, onGoScenarios
 
   // 最顶部的意图提示文案（取第一个命中意图的 tip）
   const topTip = intentResults[0]?.tip
+
+  // 回到顶部按钮
+  const [showBackToTop, setShowBackToTop] = useState(false)
+  useEffect(() => {
+    const onScroll = () => setShowBackToTop(window.scrollY > 300)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
     <div className="page-container pt-6">
@@ -287,6 +295,38 @@ export default function HomePage({ onSelectFormula, onGoComposite, onGoScenarios
         </div>
       )}
 
+      {/* 功能入口：场景库 + 高级组合（搜索时隐藏） */}
+      {!isSearching && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
+          <button
+            onClick={onGoScenarios}
+            className="bg-white dark:bg-gray-900 border-2 border-[#00B42A]/40 dark:border-[#00B42A]/30
+                       rounded-2xl px-4 py-3 flex items-center justify-between
+                       hover:border-[#00B42A]/70 hover:bg-green-50/50 dark:hover:bg-green-950/20
+                       active:scale-[0.99] transition-all"
+          >
+            <div className="text-left">
+              <div className="font-bold text-sm text-gray-900 dark:text-gray-100">💡 场景公式库</div>
+              <div className="text-gray-500 dark:text-gray-400 text-xs mt-0.5">45个真实业务场景 · 开箱即用</div>
+            </div>
+            <span className="text-gray-400 ml-3 shrink-0">→</span>
+          </button>
+
+          <button
+            onClick={onGoComposite}
+            className="bg-gradient-to-r from-[#165DFF] to-[#4080FF] dark:from-[#1a3a8f] dark:to-[#2a5acc]
+                       text-white rounded-2xl px-4 py-3 flex items-center justify-between
+                       hover:opacity-90 active:scale-[0.99] transition-all"
+          >
+            <div className="text-left">
+              <div className="font-bold text-sm">➕ 高级组合</div>
+              <div className="text-blue-100 text-xs mt-0.5">IFS · SWITCH · SUMIFS · COUNTIFS</div>
+            </div>
+            <span className="ml-3 shrink-0">→</span>
+          </button>
+        </div>
+      )}
+
       {/* 公式列表 */}
       <section className="mb-8">
         <h2 className="text-sm font-semibold text-gray-400 dark:text-gray-500 mb-3 tracking-wide uppercase">
@@ -310,44 +350,22 @@ export default function HomePage({ onSelectFormula, onGoComposite, onGoScenarios
         )}
       </section>
 
-      {/* 场景公式库入口 */}
-      <div className="mb-4">
-        <button
-          onClick={onGoScenarios}
-          className="w-full bg-white dark:bg-gray-900 border-2 border-[#00B42A]/40 dark:border-[#00B42A]/30
-                     rounded-2xl p-5 flex items-center justify-between
-                     hover:border-[#00B42A]/70 hover:bg-green-50/50 dark:hover:bg-green-950/20
-                     active:scale-[0.99] transition-all"
-        >
-          <div className="text-left">
-            <div className="font-bold text-base sm:text-lg text-gray-900 dark:text-gray-100">💡 场景公式库</div>
-            <div className="text-gray-500 dark:text-gray-400 text-sm mt-1">
-              库存查询、同比环比、工龄计算… 8个真实业务场景开箱即用
-            </div>
-          </div>
-          <span className="text-2xl ml-4 shrink-0">→</span>
-        </button>
-      </div>
-
-      {/* 高级组合入口 */}
-      <div className="mb-8">
-        <button
-          onClick={onGoComposite}
-          className="w-full bg-gradient-to-r from-[#165DFF] to-[#4080FF] dark:from-[#1a3a8f] dark:to-[#2a5acc]
-                     text-white rounded-2xl p-5 flex items-center justify-between
-                     hover:opacity-90 active:scale-[0.99] transition-all shadow-md hover:shadow-lg"
-        >
-          <div className="text-left">
-            <div className="font-bold text-base sm:text-lg">➕ 高级组合 / 多条件判断</div>
-            <div className="text-blue-100 text-sm mt-1">IFS 阶梯 · IFS 区间 · SWITCH · SUMIFS · COUNTIFS</div>
-          </div>
-          <span className="text-2xl ml-4 shrink-0">→</span>
-        </button>
-      </div>
-
       <p className="mt-2 text-center text-xs text-gray-300 dark:text-gray-600">
         生成的公式支持 Excel 和 WPS · 核心功能完全离线可用
       </p>
+
+      {/* 回到顶部按钮 */}
+      {showBackToTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="fixed bottom-6 right-5 z-50 w-10 h-10 rounded-full shadow-lg
+                     bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700
+                     text-gray-500 dark:text-gray-400 hover:text-[#165DFF] dark:hover:text-[#4080FF]
+                     hover:border-[#165DFF]/50 hover:shadow-xl
+                     flex items-center justify-center transition-all"
+          aria-label="回到顶部"
+        >↑</button>
+      )}
     </div>
   )
 }
