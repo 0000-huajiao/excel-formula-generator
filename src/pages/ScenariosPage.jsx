@@ -62,7 +62,7 @@ function ScenarioDetail({ scenario: s, onBack, onCopy }) {
       <div className="mb-5 bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 p-4 shadow-sm">
         <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3">示例数据结构</h2>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse">
+          <table className="min-w-max text-sm border-collapse">
             <thead>
               <tr>
                 {s.columns.map((col, i) => (
