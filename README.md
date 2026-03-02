@@ -7,22 +7,23 @@
 ## ✨ 功能特性
 
 ### 🔍 智能搜索
-不知道用哪个公式？直接用中文描述需求，比如"统计满足条件的数量"、"计算同比增长率"、"提取下划线前的文本"，系统会自动推荐最合适的公式和使用场景。
+不知道用哪个公式？直接用中文描述需求，比如"统计满足条件的数量"、"计算同比增长率"、"每月还款多少"，系统会自动推荐最合适的公式和使用场景。
 
-- **意图关键词匹配**：25+ 个业务意图，覆盖统计、查找、日期、文本等常见需求
+- **意图关键词匹配**：40+ 个业务意图，覆盖统计、查找、日期、文本、财务等常见需求
 - **Fuse.js 模糊搜索**：支持公式名称、描述、标签的模糊匹配
 - **下拉双栏推荐**：意图推荐 + 精确匹配，一目了然
 
-### 📋 36 个标准公式，分类管理
+### 📋 132 个标准公式，7大分类
 
-| 分类 | 公式 |
-|------|------|
-| 🔍 查找引用 | XLOOKUP、VLOOKUP、INDEX+MATCH、IFERROR |
-| ⚖️ 条件判断 | IF、AND、OR |
-| 📊 统计求和 | SUMIF、SUMIFS、COUNTIF、COUNTIFS、AVERAGEIF、AVERAGEIFS、MAXIFS、MINIFS、SUMPRODUCT、RANK |
-| ✏️ 文本处理 | LEFT、MID、RIGHT、TEXTBEFORE、TEXTAFTER、SUBSTITUTE、FIND、TEXTJOIN、TEXT、CONCAT、LEN、TRIM |
-| 📅 日期时间 | DATEDIF、NETWORKDAYS、EOMONTH、YEAR/MONTH/DAY |
-| 🔢 数学计算 | ROUND、ROUNDUP、ROUNDDOWN、MOD、ABS |
+| 分类 | 公式数 | 代表公式 |
+|------|--------|----------|
+| 🔍 查找引用 | 17 | XLOOKUP、VLOOKUP、INDEX+MATCH、FILTER、UNIQUE、SORT |
+| ⚖️ 条件判断 | 13 | IF、IFS、IFERROR、IFNA、AND、OR、ISBLANK、ISNUMBER |
+| 📊 统计求和 | 24 | SUM、SUMIF、COUNTIF、AVERAGE、MAX、MIN、RANK、MEDIAN、STDEV |
+| ✏️ 文本处理 | 25 | LEFT/MID/RIGHT、TEXTBEFORE/AFTER、SUBSTITUTE、UPPER/LOWER、VALUE |
+| 📅 日期时间 | 16 | TODAY、DATEDIF、NETWORKDAYS、WEEKDAY、EDATE、EOMONTH |
+| 🔢 数学计算 | 24 | ROUND、INT、POWER、SQRT、LOG、RAND、RANDBETWEEN、GCD |
+| 💰 财务金融 | 13 | PMT、PV、FV、NPV、IRR、RATE、SLN、DB |
 
 每个公式都有：可视化参数填写 → 自动生成完整公式 → 一键复制。
 
@@ -77,9 +78,9 @@ npm run dev
 src/
 ├── components/        # 公共组件（FormulaCard、Header、TypeBubble 等）
 ├── data/
-│   ├── formulas.js    # 36 个公式定义 + 分类配置
+│   ├── formulas.js    # 132 个公式定义 + 7大分类配置
 │   ├── scenarios.js   # 8 个场景模板
-│   └── keywords.js    # 意图关键词库（25+ 意图）
+│   └── keywords.js    # 意图关键词库（40+ 意图）
 └── pages/
     ├── HomePage.jsx       # 首页：搜索 + 分类浏览
     ├── StandardPage.jsx   # 标准公式详情页
