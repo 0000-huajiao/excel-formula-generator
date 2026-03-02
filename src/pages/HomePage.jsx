@@ -25,8 +25,10 @@ export default function HomePage({ onSelectFormula, onGoComposite, onGoScenarios
   const [query, setQuery]               = useState('')
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [activeCategory, setActiveCategory] = useState('all')
-  const inputRef    = useRef(null)
-  const dropdownRef = useRef(null)
+  const [categoryMenuOpen, setCategoryMenuOpen] = useState(false)
+  const inputRef       = useRef(null)
+  const dropdownRef    = useRef(null)
+  const categoryMenuRef = useRef(null)
 
   // Fuse 精确搜索
   const fuseResults = useMemo(() => {
@@ -86,6 +88,9 @@ export default function HomePage({ onSelectFormula, onGoComposite, onGoScenarios
         !inputRef.current?.contains(e.target)
       ) {
         setDropdownOpen(false)
+      }
+      if (categoryMenuRef.current && !categoryMenuRef.current.contains(e.target)) {
+        setCategoryMenuOpen(false)
       }
     }
     document.addEventListener('mousedown', handleClick)
@@ -275,23 +280,50 @@ export default function HomePage({ onSelectFormula, onGoComposite, onGoScenarios
         )}
       </div>
 
-      {/* 分类 Tab */}
+      {/* 分类选择器 */}
       {!isSearching && (
-        <div className="flex gap-2 overflow-x-auto pb-1 mb-4 scrollbar-hide">
-          {FORMULA_CATEGORIES.map(cat => (
-            <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              className={`shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap
-                ${activeCategory === cat.id
-                  ? 'bg-[#165DFF] dark:bg-[#4080FF] text-white'
-                  : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700 hover:border-[#165DFF]/50'
-                }`}
-            >
-              <span>{cat.emoji}</span>
-              <span>{cat.label}</span>
-            </button>
-          ))}
+        <div className="relative mb-4" ref={categoryMenuRef}>
+          {/* 触发按钮 */}
+          <button
+            onClick={() => setCategoryMenuOpen(o => !o)}
+            className="flex items-center gap-2 px-3 py-2 rounded-xl
+                       bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700
+                       hover:border-[#165DFF]/50 dark:hover:border-[#4080FF]/50
+                       text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors"
+          >
+            <svg className="w-4 h-4 text-gray-500 dark:text-gray-400 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+            <span>{FORMULA_CATEGORIES.find(c => c.id === activeCategory)?.emoji}</span>
+            <span>{FORMULA_CATEGORIES.find(c => c.id === activeCategory)?.label}</span>
+            <svg className={`w-3.5 h-3.5 text-gray-400 ml-0.5 transition-transform ${categoryMenuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+
+          {/* 下拉面板 */}
+          {categoryMenuOpen && (
+            <div className="absolute top-full left-0 mt-1.5 z-20 w-64
+                            bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700
+                            rounded-2xl shadow-xl overflow-hidden p-1.5">
+              <div className="grid grid-cols-2 gap-0.5">
+                {FORMULA_CATEGORIES.map(cat => (
+                  <button
+                    key={cat.id}
+                    onClick={() => { setActiveCategory(cat.id); setCategoryMenuOpen(false) }}
+                    className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium transition-colors text-left
+                      ${activeCategory === cat.id
+                        ? 'bg-[#165DFF]/10 dark:bg-[#4080FF]/15 text-[#165DFF] dark:text-[#4080FF]'
+                        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800'
+                      }`}
+                  >
+                    <span>{cat.emoji}</span>
+                    <span>{cat.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
 
