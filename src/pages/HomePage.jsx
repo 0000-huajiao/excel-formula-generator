@@ -390,7 +390,7 @@ export default function HomePage({ onSelectFormula, onGoComposite, onGoScenarios
       {/* 页脚 */}
       <div className="mt-10 pb-8 text-center">
         <a
-          href="privacy.html"
+          href="https://c4laude-4g7ejjxnb1dfe190-1407639186.tcloudbaseapp.com/excel-formula-generator/privacy.html"
           target="_blank"
           rel="noopener noreferrer"
           className="text-xs text-gray-400 dark:text-gray-600 hover:text-[#165DFF] dark:hover:text-[#4080FF] transition-colors"
