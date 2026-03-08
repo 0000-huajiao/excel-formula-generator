@@ -387,6 +387,18 @@ export default function HomePage({ onSelectFormula, onGoComposite, onGoScenarios
       </p>
 
       {/* 回到顶部按钮 */}
+      {/* 页脚 */}
+      <div className="mt-10 pb-8 text-center">
+        <a
+          href="privacy.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs text-gray-400 dark:text-gray-600 hover:text-[#165DFF] dark:hover:text-[#4080FF] transition-colors"
+        >
+          隐私政策
+        </a>
+      </div>
+
       {showBackToTop && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
